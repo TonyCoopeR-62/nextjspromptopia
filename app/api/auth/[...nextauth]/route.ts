@@ -2,7 +2,6 @@ import NextAuth from 'next-auth/next';
 import GoogleProvider from 'next-auth/providers/google';
 import { connectToDB } from '@utils/database';
 import User from '@models/user';
-import { ClientSession } from 'mongodb';
 
 
 const handler = NextAuth({
@@ -12,11 +11,6 @@ const handler = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     })
   ],
-  // async sess3ion2({ session }: { session: { user: { email: string, id: string }}}) {
-  //   const sessionUser = await User.findOne({ email: session.user.email })
-  //   session.user.id = sessionUser._id.toString();
-  //   return session;
-  // },
   callbacks: {
     async session({ session }) {
       const sessionUser = await User.findOne({ email: session?.user?.email});
